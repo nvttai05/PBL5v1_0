@@ -9,5 +9,6 @@ app/static/audio/
 app/.idea/
 yolo11m.pt
 yolo11s.pt
-yolo11x.pt
+last.pt
+best.pt
 yolo11n.pt

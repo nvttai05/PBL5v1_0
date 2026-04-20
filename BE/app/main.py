@@ -71,7 +71,7 @@ os.makedirs("app/static/audio", exist_ok=True)
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 # Import routers sau khi app được tạo
-from app.routers import status, detect, speak, history, quiz, object
+from app.routers import status, detect, speak, history, quiz, object, auth
 
 app.include_router(status.router)
 app.include_router(detect.router)
@@ -79,7 +79,7 @@ app.include_router(speak.router)
 app.include_router(history.router)
 app.include_router(quiz.router)
 app.include_router(object.router)
-
+app.include_router(auth.router)
 
 @app.get("/")
 async def root():

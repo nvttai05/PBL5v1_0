@@ -16,8 +16,8 @@ from app.services.yolo_service import yolo_service
 router = APIRouter(prefix="/api/v1", tags=["Detection"])
 
 # --- CẤU HÌNH ---
-SPEAKER_URL = "http://192.168.2.106/play"
-BASE_URL = "http://192.168.2.104:8000"
+SPEAKER_URL = "http://192.168.2.104/play"
+BASE_URL = "http://192.168.2.101:8000"
 
 # FE đang vẽ theo ảnh 320x240
 IMAGE_WIDTH = 320
