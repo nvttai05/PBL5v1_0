@@ -1,7 +1,22 @@
 import os
 from sqlalchemy.orm import Session
 from app.models.object_dictionary import ObjectDictionary
+from app.models.user import User
 from app.services.tts_service import tts_service
+
+
+def seed_default_user(db: Session):
+    """Tạo user mặc định user_id=1 nếu chưa có."""
+    existing = db.query(User).filter(User.user_id == 1).first()
+    if not existing:
+        user = User(user_id=1, username="test_user", password="test123", role="student")
+        db.add(user)
+        db.commit()
+        print("✅ Default test user created (user_id=1)")
+    else:
+        print(f"✅ User already exists: {existing.username}")
+
+
 
 
 def seed_object_dictionary(db: Session):

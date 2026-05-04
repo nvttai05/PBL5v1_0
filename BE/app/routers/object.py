@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.object_dictionary import ObjectDictionary
 from app.schemas.object_detail import ObjectDetailResponse
+from app.services.yolo_service import yolo_service
 
 router = APIRouter(prefix="/api/v1", tags=["Object Detail"])
 
@@ -19,3 +20,4 @@ async def get_object_detail(class_name_en: str, db: Session = Depends(get_db)):
         pronunciation_en=obj.pronunciation_ipa,
         audio_url=obj.audio_file_path,
     )
+

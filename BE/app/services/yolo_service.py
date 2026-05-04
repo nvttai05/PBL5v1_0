@@ -1,3 +1,4 @@
+from os import name
 import time
 import io
 from typing import Dict, Any
@@ -181,6 +182,5 @@ class YOLOService:
 
         except Exception as e:
             raise Exception(f"YOLO detection failed! (Error: {e})")
-
 
 yolo_service = YOLOService()
