@@ -10,6 +10,7 @@ app/.idea/
 best.pt
 yolo11s.pt
 yolo11x.pt
-last.pt
-bestt.pt
-yolo11n.pt
+BE/last.pt
+BE/bestt.pt
+BE/best.pt
+BE/yolo11n.pt
