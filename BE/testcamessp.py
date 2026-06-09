@@ -8,7 +8,7 @@ import uvicorn
 app = FastAPI()
 
 # Load model YOLOv11n
-model = YOLO("yolo11m.pt")
+model = YOLO("best.pt")
 
 # FPS debug
 frame_count = 0

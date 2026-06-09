@@ -9,7 +9,7 @@ if torch.cuda.is_available():
     print("GPU:", torch.cuda.get_device_name(0))
 
 # ===== 2. Load model =====
-model = YOLO("yolo11m.pt")
+model = YOLO("best.pt")
 
 # ===== 3. Chọn device =====
 device = "cuda" if torch.cuda.is_available() else "cpu"

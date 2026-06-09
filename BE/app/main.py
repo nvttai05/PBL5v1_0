@@ -68,7 +68,8 @@ app.add_middleware(
 os.makedirs("app/static/audio", exist_ok=True)
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
-from app.routers import status, detect, speak, history, quiz, object
+# Import routers sau khi app được tạo
+from app.routers import status, detect, speak, history, quiz, object, auth
 
 app.include_router(status.router)
 app.include_router(detect.router)
@@ -76,7 +77,7 @@ app.include_router(speak.router)
 app.include_router(history.router)
 app.include_router(quiz.router)
 app.include_router(object.router)
-
+app.include_router(auth.router)
 
 @app.get("/")
 async def root():
@@ -87,34 +88,34 @@ async def root():
     }
 
 
-@app.websocket("/api/v1/ws/detect")
-async def websocket_detect(websocket: WebSocket):
-    await manager.connect_cam(websocket)
-    last_processed_time = 0.0
-    try:
-        while True:
-            data = await websocket.receive_bytes()
-            now = time_module.time()
-            if now - last_processed_time < 0.083:
-                continue
-            last_processed_time = now
-            result = await asyncio.to_thread(yolo_service.detect_objects, data)
-            detections = result.get("detections", [])
-            base64_image = base64.b64encode(data).decode()
-            await manager.broadcast_to_app({
-                "type": "detection",
-                "image": base64_image,
-                "image_width": 320,
-                "image_height": 240,
-                "detections": detections,
-                "timestamp": datetime.now().isoformat()
-            })
-    except WebSocketDisconnect:
-        manager.disconnect_cam(websocket)
-    except Exception as e:
-        print(f"Cam Error: {e}")
-        manager.disconnect_cam(websocket)
-
+# @app.websocket("/api/v1/ws/detect")
+# async def websocket_detect(websocket: WebSocket):
+#     await manager.connect_cam(websocket)
+#     last_processed_time = 0.0
+#     try:
+#         while True:
+#             data = await websocket.receive_bytes()
+#             now = time_module.time()
+#             if now - last_processed_time < 0.083:
+#                 continue
+#             last_processed_time = now
+#             result = await asyncio.to_thread(yolo_service.detect_objects, data)
+#             detections = result.get("detections", [])
+#             base64_image = base64.b64encode(data).decode()
+#             await manager.broadcast_to_app({
+#                 "type": "detection",
+#                 "image": base64_image,
+#                 "image_width": 320,
+#                 "image_height": 240,
+#                 "detections": detections,
+#                 "timestamp": datetime.now().isoformat()
+#             })
+#     except WebSocketDisconnect:
+#         manager.disconnect_cam(websocket)
+#     except Exception as e:
+#         print(f"Cam Error: {e}")
+#         manager.disconnect_cam(websocket)
+#
 
 @app.websocket("/api/v1/ws/app")
 async def websocket_app(websocket: WebSocket):

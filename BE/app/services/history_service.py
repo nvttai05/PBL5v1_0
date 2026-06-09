@@ -26,7 +26,7 @@ class HistoryService:
         confidence: float,
         session_type: str = "detection",
         duration_seconds: Optional[float] = None,
-        merge_window_seconds: int = 60,
+        merge_window_seconds: int = 120,
     ) -> LearningHistory:
         object_name_en = object_name_en.strip().lower()
 
